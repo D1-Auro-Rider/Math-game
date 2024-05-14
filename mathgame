@@ -1,23 +1,25 @@
 import time
-import datetime
+import random
 
+# asks for users name and prints welcome message with it
 name = input(print('Hello, what is your name?: '))
 print(
     'Welcome to my math game ' + name + ', you will you be given random math questions and will need to answer as '
                                         'much as possible within a given time')
 
 
-def countdown(s):
-    # calculates number of seconds
-    seconds = s
+# timer for length of play, counts down to zero
+def countdown(seconds):
 
     while seconds > 0:
-        timer = datetime.timedelta(seconds=seconds)
-        print(timer, end='\r')
+        # waits a set amount of time before executing a piece of code
         time.sleep(1)
         seconds -= 1
     print('Time is up buddy, lets see your score')
 
 
+# asks for seconds that user wants to play
 s = input('Enter how many seconds would you like?: ')
 countdown(int(s))
+
+print('Question: ' + int(random.randint(2,20))*int(random.randint(2,10)))
