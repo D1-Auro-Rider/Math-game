@@ -9,21 +9,26 @@ results = []
 name = input(print('Hello, what is your name?: '))
 print(
     'Welcome to my math game ' + name + ', you will be given random math questions and will need to answer as '
-                                        'much as possible within a given time')
+                                        'much as possible')
 
-# asks user what questions they'll like
 math = input(print('''What type of math questions would you like to answer?
-for addition, type '+'
-for subtraction, type '-'
-for multiplication, type '*'
-for division, type '/' '''))
-
-# asks user how many questions they'd like
-num = int(input(print('How many questions would you like to answer? ')))
+    for addition, type '+'
+    for subtraction, type '-'
+    for multiplication, type '*'
+    for division, type '/' '''))
+# asks user what questions they'll like
+while math != '+' or '-' or '*' or '/':
+    math = input(print('''What type of math questions would you like to answer?
+    for addition, type '+'
+    for subtraction, type '-'
+    for multiplication, type '*'
+    for division, type '/' '''))
 
 
 # checks if user picked addition
 if math == '+':
+    # asks user how many questions they'd like
+    num = int(input(print('How many questions would you like to answer? ')))
     for add in range(num):
         # generates random question
         add1 = random.randint(1, 10)
@@ -46,6 +51,8 @@ if math == '+':
 
 # checks if user picked subtraction
 if math == '-':
+    # asks user how many questions they'd like
+    num = int(input(print('How many questions would you like to answer? ')))
     for sub in range(num):
         # generates random question
         sub1 = random.randint(10, 20)
@@ -68,6 +75,8 @@ if math == '-':
 
 # checks if user picked multiplication
 if math == '*':
+    # asks user how many questions they'd like
+    num = int(input(print('How many questions would you like to answer? ')))
     for mult in range(num):
         # generates random question
         mult1 = random.randint(1, 10)
@@ -90,9 +99,11 @@ if math == '*':
 
 # checks if user picked multiplication
 if math == '/':
+    # asks user how many questions they'd like
+    num = int(input(print('How many questions would you like to answer? ')))
     for sub in range(num):
         # generates random question
-        div1 = random.randint(1, 100)
+        div1 = random.randint(1, 20)
         div2 = 2
         divquestion = input(print('Question: What is', str(div1), '/', str(div2) + '?'))
         divanswer = round(div1 / div2)
