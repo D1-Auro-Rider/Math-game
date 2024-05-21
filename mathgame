@@ -1,25 +1,110 @@
-import time
+# this is a math game made by me, it's purpose is to ask the user the randomly generated math questions
+
 import random
+
+# stores how many addition questions were right and wrong
+results = []
 
 # asks for users name and prints welcome message with it
 name = input(print('Hello, what is your name?: '))
 print(
-    'Welcome to my math game ' + name + ', you will you be given random math questions and will need to answer as '
+    'Welcome to my math game ' + name + ', you will be given random math questions and will need to answer as '
                                         'much as possible within a given time')
 
+# asks user what questions they'll like
+math = input(print('''What type of math questions would you like to answer?
+for addition, type '+'
+for subtraction, type '-'
+for multiplication, type '*'
+for division, type '/' '''))
 
-# timer for length of play, counts down to zero
-def countdown(seconds):
-
-    while seconds > 0:
-        # waits a set amount of time before executing a piece of code
-        time.sleep(1)
-        seconds -= 1
-    print('Time is up buddy, lets see your score')
+# asks user how many questions they'd like
+num = int(input(print('How many questions would you like to answer? ')))
 
 
-# asks for seconds that user wants to play
-s = input('Enter how many seconds would you like?: ')
-countdown(int(s))
+# checks if user picked addition
+if math == '+':
+    for add in range(num):
+        # generates random question
+        add1 = random.randint(1, 10)
+        add2 = random.randint(1, 10)
+        addquestion = input(print('Question: What is', str(add1), '+', str(add2) + '?'))
+        addanswer = add1 + add2
+        # tells user if they were right or wrong
+        if str(addquestion) == str(addanswer):
+            print('Correct!')
+            # records into a list if the user got something wrong
+            results.append('Correct')
+        else:
+            print('Wrong!')
+            # records into a list if the user got something wrong
+            results.append('Wrong')
+    # tells the user their score
+    print('You got ' + str(results.count('Correct')) + ' out of ' + str(num) + ' correct')
+    print('You got ' + str(results.count('Wrong')) + ' wrong')
 
-print('Question: ' + int(random.randint(2,20))*int(random.randint(2,10)))
+
+# checks if user picked subtraction
+if math == '-':
+    for sub in range(num):
+        # generates random question
+        sub1 = random.randint(10, 20)
+        sub2 = random.randint(1, 10)
+        subquestion1 = input(print('Question: What is', str(sub1), '-', str(sub2) + '?'))
+        subanswer1 = sub1 - sub2
+        # tells user if they were right or wrong
+        if str(subquestion1) == str(subanswer1):
+            print('Correct!')
+            # records into a list if the user got something wrong
+            results.append('Correct')
+        else:
+            print('Wrong!')
+            # records into a list if the user got something wrong
+            results.append('Wrong')
+    # tells the user their score
+    print('You got ' + str(results.count('Correct')) + ' out of ' + str(num) + ' correct')
+    print('You got ' + str(results.count('Wrong')) + ' wrong')
+
+
+# checks if user picked multiplication
+if math == '*':
+    for mult in range(num):
+        # generates random question
+        mult1 = random.randint(1, 10)
+        mult2 = random.randint(1, 10)
+        multquestion = input(print('Question: What is', str(mult1), '*', str(mult2) + '?'))
+        multanswer = mult1 * mult2
+        # tells user if they were right or wrong
+        if str(multquestion) == str(multanswer):
+            print('Correct!')
+            # records into a list if the user got something wrong
+            results.append('Correct')
+        else:
+            print('Wrong!')
+            # records into a list if the user got something wrong
+            results.append('Wrong')
+    # tells the user their score
+    print('You got ' + str(results.count('Correct')) + ' out of ' + str(num) + ' correct')
+    print('You got ' + str(results.count('Wrong')) + ' wrong')
+
+
+# checks if user picked multiplication
+if math == '/':
+    for sub in range(num):
+        # generates random question
+        div1 = random.randint(1, 100)
+        div2 = 2
+        divquestion = input(print('Question: What is', str(div1), '/', str(div2) + '?'))
+        divanswer = round(div1 / div2)
+        # tells user if they were right or wrong
+        if str(divquestion) == str(divanswer):
+            print('Correct!')
+            # records into a list if the user got something wrong
+            results.append('Correct')
+        else:
+            print('Wrong!')
+            # records into a list if the user got something wrong
+            results.append('Wrong')
+    # tells the user their score
+    print('You got ' + str(results.count('Correct')) + ' out of ' + str(num) + ' correct')
+    print('You got ' + str(results.count('Wrong')) + ' wrong')
