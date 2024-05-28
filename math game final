@@ -1,0 +1,94 @@
+import random
+
+def ask_question(question, correct_answer):
+    """Asks a math question and returns whether the user's answer is correct."""
+    user_answer = input(question + ' Your answer: ')
+    return str(user_answer) == str(correct_answer), user_answer
+
+def print_score(results, num):
+    """Prints the final score."""
+    print(f'You got {results.count("Correct")} out of {num} correct')
+    print(f'You got {results.count("Wrong")} wrong')
+
+def show_history(quiz_history):
+    """Displays the history of questions and answers."""
+    for q, user_answer, correct in quiz_history:
+        result = 'Correct' if correct else 'Incorrect'
+        print(f'{q}, Your answer: {user_answer}, {result}')
+
+def math_quiz():
+    # Stores results and quiz history
+    results = []
+    quiz_history = []
+
+    # Asks for user's name and prints welcome message
+    name = input('Hello, what is your name?: ')
+    print(f'Welcome to my math game, {name}! You will be given random math questions.')
+
+    # Sets math variable and tells user what questions are available
+    print('''Please pick what type of questions you'd like to answer:
+        For addition, type '+'
+        For subtraction, type '-'
+        For multiplication, type '*'
+        For division, type '/' ''')
+    print('If your response is invalid, you will be asked again until your response is valid')
+
+    # This loop runs until the user inputs a valid response
+    while True:
+        math = input('Please select now: ')
+        if math in ['+', '-', '*', '/']:
+            break
+
+    # Asks user how many questions they'd like
+    while True:
+        try:
+            num = int(input('Please pick how many questions you want: '))
+            break
+        except ValueError:
+            print("Please enter a valid number")
+
+    # Checks which math operation was picked and generates appropriate questions
+    for i in range(num):
+        if math == '+':
+            n1, n2 = random.randint(1, 10), random.randint(1, 10)
+            question = f'Question: What is {n1} + {n2}? '
+            correct_answer = n1 + n2
+        elif math == '-':
+            n1, n2 = random.randint(10, 20), random.randint(1, 10)
+            question = f'Question: What is {n1} - {n2}? '
+            correct_answer = n1 - n2
+        elif math == '*':
+            n1, n2 = random.randint(1, 10), random.randint(1, 10)
+            question = f'Question: What is {n1} * {n2}? '
+            correct_answer = n1 * n2
+        elif math == '/':
+            n1, n2 = random.randint(1, 20), random.randint(1, 10)
+            question = f'Question: What is {n1} / {n2}? (Round your answer to the nearest integer) '
+            correct_answer = round(n1 / n2)
+
+        correct, user_answer = ask_question(question, correct_answer)
+        if correct:
+            print('Correct!')
+            results.append('Correct')
+        else:
+            print('Wrong!')
+            results.append('Wrong')
+        quiz_history.append((question, user_answer, correct))
+
+    # Tells the user their score
+    print_score(results, num)
+
+    # Asks if the user wants to see their history
+    see_history = input("Would you like to see your history? (answer with 'y' or 'n') ")
+    if see_history.lower() == 'y':
+        show_history(quiz_history)
+    else:
+        print('Thank you for playing! I hope you had fun :D')
+
+# Main loop to allow replaying the game
+while True:
+    math_quiz()
+    replay = input("Would you like to play again? (answer with 'y' or 'n') ")
+    if replay.lower() != 'y':
+        print('Thank you for playing! Goodbye!')
+        break
