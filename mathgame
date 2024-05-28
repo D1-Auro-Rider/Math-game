@@ -1,163 +1,94 @@
-# this is a math game made by me, it's purpose is to ask the user the randomly generated math questions to test their
-# knowledge.
-
 import random
 
-# stores how many questions were right and wrong
-results = []
-quiz_history = []
+def ask_question(question, correct_answer):
+    """Asks a math question and returns whether the user's answer is correct."""
+    user_answer = input(question + ' Your answer: ')
+    return str(user_answer) == str(correct_answer), user_answer
 
-# asks for users name and prints welcome message with it
-name = input('Hello, what is your name?: ')
-print(
-    'Welcome to my math game ' + name + ', you will be given random math questions and will need to answer as '
-                                        'much as possible')
+def print_score(results, num):
+    """Prints the final score."""
+    print(f'You got {results.count("Correct")} out of {num} correct')
+    print(f'You got {results.count("Wrong")} wrong')
 
-# sets math variable and tell user what questions are available
-math = ''
-print('''Please pick what type of questions you'd like to answer
-    for addition, type '+'
-    for subtraction, type '-'
-    for multiplication, type '*'
-    for division, type '/' ''')
-print('If your response is invalid, you will be asked again until your response is valid')
+def show_history(quiz_history):
+    """Displays the history of questions and answers."""
+    for q, user_answer, correct in quiz_history:
+        result = 'Correct' if correct else 'Incorrect'
+        print(f'{q}, Your answer: {user_answer}, {result}')
 
-# this loop runs until the user inputs a valid response
+def math_quiz():
+    # Stores results and quiz history
+    results = []
+    quiz_history = []
+
+    # Asks for user's name and prints welcome message
+    name = input('Hello, what is your name?: ')
+    print(f'Welcome to my math game, {name}! You will be given random math questions.')
+
+    # Sets math variable and tells user what questions are available
+    print('''Please pick what type of questions you'd like to answer:
+        For addition, type '+'
+        For subtraction, type '-'
+        For multiplication, type '*'
+        For division, type '/' ''')
+    print('If your response is invalid, you will be asked again until your response is valid')
+
+    # This loop runs until the user inputs a valid response
+    while True:
+        math = input('Please select now: ')
+        if math in ['+', '-', '*', '/']:
+            break
+
+    # Asks user how many questions they'd like
+    while True:
+        try:
+            num = int(input('Please pick how many questions you want: '))
+            break
+        except ValueError:
+            print("Please enter a valid number")
+
+    # Checks which math operation was picked and generates appropriate questions
+    for i in range(num):
+        if math == '+':
+            n1, n2 = random.randint(1, 10), random.randint(1, 10)
+            question = f'Question: What is {n1} + {n2}? '
+            correct_answer = n1 + n2
+        elif math == '-':
+            n1, n2 = random.randint(10, 20), random.randint(1, 10)
+            question = f'Question: What is {n1} - {n2}? '
+            correct_answer = n1 - n2
+        elif math == '*':
+            n1, n2 = random.randint(1, 10), random.randint(1, 10)
+            question = f'Question: What is {n1} * {n2}? '
+            correct_answer = n1 * n2
+        elif math == '/':
+            n1, n2 = random.randint(1, 20), random.randint(1, 10)
+            question = f'Question: What is {n1} / {n2}? (Round your answer to the nearest integer) '
+            correct_answer = round(n1 / n2)
+
+        correct, user_answer = ask_question(question, correct_answer)
+        if correct:
+            print('Correct!')
+            results.append('Correct')
+        else:
+            print('Wrong!')
+            results.append('Wrong')
+        quiz_history.append((question, user_answer, correct))
+
+    # Tells the user their score
+    print_score(results, num)
+
+    # Asks if the user wants to see their history
+    see_history = input("Would you like to see your history? (answer with 'y' or 'n') ")
+    if see_history.lower() == 'y':
+        show_history(quiz_history)
+    else:
+        print('Thank you for playing! I hope you had fun :D')
+
+# Main loop to allow replaying the game
 while True:
-    math = input('Please select now: ')
-    if math in ['+', '-', '*', '/']:
+    math_quiz()
+    replay = input("Would you like to play again? (answer with 'y' or 'n') ")
+    if replay.lower() != 'y':
+        print('Thank you for playing! Goodbye!')
         break
-
-# asks user how many questions they'd like
-print("Please pick how many questions you want")
-num = str(input('Please select now: '))
-
-# checks if user picked addition
-if math == '+':
-
-    for add in range(int(num)):
-
-        # generates random question
-        add1 = random.randint(1, 10)
-        add2 = random.randint(1, 10)
-        addquestion = ('Question: What is ' + str(add1) + ' + ' + str(add2) + '? ')
-        print(addquestion)
-        user_add_answer = input('Your answer: ')
-        addanswer = add1 + add2
-
-        # tells user if they were right or wrong
-        if str(addquestion) == str(addanswer):
-            print('Correct!')
-            # records into a list if the user got something wrong
-            results.append('Correct')
-
-        else:
-            print('Wrong!')
-            # records into a list if the user got something wrong
-            results.append('Wrong')
-
-    # tells the user their score by counting how 'Correct!' and 'Wrong! were in the list
-    print('You got ' + str(results.count('Correct')) + ' out of ' + str(num) + ' correct')
-    print('You got ' + str(results.count('Wrong')) + ' wrong')
-
-    see_history = input("Would you like to see your history? (answer with a 'y' or 'n') ")
-    if see_history == 'y':
-        for q, user_answer, correct in quiz_history:
-            show = 'Correct' if correct else 'Incorrect'
-            print(addquestion + ', Your answer: ' + user_add_answer + ', ' + show)
-    else:
-        print('Thank you for playing! I hope you had fun :D')
-
-# checks if user picked subtraction
-elif math == '-':
-
-    for sub in range(int(num)):
-
-        # generates random question
-        sub1 = random.randint(10, 20)
-        sub2 = random.randint(1, 10)
-        subquestion = ('Question: What is ' + str(sub1) + ' - ' + str(sub2) + '? ')
-        print(subquestion)
-        user_sub_answer = input('Your answer: ')
-        subanswer = sub1 - sub2
-
-        # tells user if they were right or wrong
-        if str(user_sub_answer) == str(subanswer):
-            print('Correct!')
-            # records into a list if the user got something wrong
-            results.append('Correct')
-            quiz_history.append((subquestion, user_sub_answer, True))
-        else:
-            print('Wrong!')
-
-            # records into a list if the user got something wrong
-            results.append('Wrong')
-            quiz_history.append((subquestion, user_sub_answer, False))
-
-    # tells the user their score by counting how 'Correct!' and 'Wrong! were in the list
-    print('You got ' + str(results.count('Correct')) + ' out of ' + str(num) + ' correct')
-    print('You got ' + str(results.count('Wrong')) + ' wrong')
-
-    see_history = input("Would you like to see your history? (answer with a 'y' or 'n') ")
-    if see_history == 'y':
-        for q, user_answer, correct in quiz_history:
-            show = 'Correct' if correct else 'Incorrect'
-            print(subquestion + ', Your answer: ' + user_sub_answer + ', ' + show)
-    else:
-        print('Thank you for playing! I hope you had fun :D')
-
-# checks if user picked multiplication
-elif math == '*':
-
-    for mult in range(int(num)):
-
-        # generates random question
-        mult1 = random.randint(1, 10)
-        mult2 = random.randint(1, 10)
-        multquestion = input('Question: What is ' + str(mult1) + ' * ' + str(mult2) + '? ')
-        multanswer = mult1 * mult2
-
-        # tells user if they were right or wrong
-        if str(multquestion) == str(multanswer):
-            print('Correct!')
-
-            # records into a list if the user got something wrong
-            results.append('Correct')
-        else:
-            print('Wrong!')
-
-            # records into a list if the user got something wrong
-            results.append('Wrong')
-
-    # tells the user their score by counting how 'Correct!' and 'Wrong! were in the list
-    print('You got ' + str(results.count('Correct')) + ' out of ' + str(num) + ' correct')
-    print('You got ' + str(results.count('Wrong')) + ' wrong')
-
-
-# checks if user picked multiplication
-elif math == '/':
-
-    for sub in range(int(num)):
-
-        # generates random question
-        div1 = random.randint(1, 20)
-        div2 = 2
-        print('Round your answer up or down')
-        divquestion = input('Question: What is ' + str(div1) + ' / ' + str(div2) + '? ')
-        divanswer = round(div1 / div2)
-
-        # tells user if they were right or wrong
-        if str(divquestion) == str(divanswer):
-            print('Correct!')
-
-            # records into a list if the user got something wrong
-            results.append('Correct')
-        else:
-            print('Wrong!')
-
-            # records into a list if the user got something wrong
-            results.append('Wrong')
-
-    # tells the user their score by counting how 'Correct!' and 'Wrong! were in the list
-    print('You got ' + str(results.count('Correct')) + ' out of ' + str(num) + ' correct')
-    print('You got ' + str(results.count('Wrong')) + ' wrong')
